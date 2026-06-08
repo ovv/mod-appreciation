@@ -1,114 +1,129 @@
 [worldserver]
 
-#################################
-#
-# Require certificates to use these feature
-# The item id for the certificate is 20460 and it is bound to the account
-#
+# Allow being boosted to a specific level.
 # Default: 1 (enabled)
-#
+Boost.Enabled = 1
 
-Appreciation.RequireCertificate.Enabled = 1
+# Allow player to boost to level 60
+# Default: 1
+Boost.60.Enabled = 1
 
-#################################
+# Allow player to boost to level 70
+# Default: 1
+Boost.70.Enabled = 1
 
-#################################
-#
-# Allow being boosted to a specific level and be given a basic set of equipment
-#
-# Default: 1 (enabled)
-#
+# Allow player to boost to level 80 with fresh dungeon gear (quest / normal dungeon).
+# Default: 1
+Boost.80.Fresh.Enabled = 1
 
-Appreciation.LevelBoost.Enabled = 1
+# Allow player to boost to level 80 with pre-Naxxramas gear (heroic / pre-raid best in slot).
+# Default: 1
+Boost.80.PreRaid.Enabled = 1
 
-#################################
+# Allow player to boost to level 80 with PVP gear (Season 5 Gladiator).
+# Default: 1
+Boost.80.PVP.Enabled = 1
 
-#################################
-#
-# The level to give the player when using the level boost feature
-# Accepted values are 60, 70 and 80
-#
-# Default: 60
-#
-
-Appreciation.LevelBoost.TargetLevel = 60
-
-#################################
-
-#################################
-#
-# The amount of copper to give the player when using the level boost feature
+# The amount of gold to give.
 # Will be disabled if set to 0
-#
-# Default: 2500000 (250 gold)
-#
+# Default: 250
+Boost.Gold = 250
 
-Appreciation.LevelBoost.IncludedCopper = 2500000
+# Give weapons and armors according to Level.
+# Default: 1
+Boost.Equipment = 1
 
-#################################
+# Enchant the boosted level-80 gear (per specialisation).
+# Default: 1
+Boost.Enchants = 1
 
-#################################
-#
-# Allow unlocking flight paths for all continents
-#
-# Default: 1 (enabled)
-#
+# Socket gems into the boosted level-80 gear (per specialisation).
+# Default: 1
+Boost.Gems = 1
 
-Appreciation.UnlockContinents.Enabled = 1
+# Give bags according to Level (auto-equipped into empty bag slots, mailed otherwise).
+# Default: 1
+Boost.Bags = 1
 
-#################################
+# Give a consumable kit (food, drink, potions, flask, bandages) plus class-specific
+# reagents (rogue poisons, mage runes, warlock soul shards, shaman ankhs).
+# Default: 1
+Boost.Consumables = 1
 
-#################################
-#
-# Allow unlocking flight paths for Eastern Kingdoms
-#
-# Default: 1 (enabled)
-#
+# Equip a quiver (arrows) or ammo pouch (bullets) matching the equipped ranged weapon
+# and fill it with ammo.
+# Default: 1
+Boost.Ammo = 1
 
-Appreciation.UnlockContinents.EasternKingdoms.Enabled = 1
+# Give weapons and armor proficiencies.
+# Default: 1
+Boost.Proficiencies = 1
 
-#################################
+# Give spells.
+# Default: 1
+Boost.Spells = 1
 
-#################################
-#
-# Allow unlocking flight paths for Kalimdor
-#
-# Default: 1 (enabled)
-#
+# Apply a preset talent build for the chosen specialisation on boost.
+# When 0, talents are only reset (the player spends their own).
+# Default: 1
+Boost.Talents = 1
 
-Appreciation.UnlockContinents.Kalimdor.Enabled = 1
+# Inscribe preset glyphs for the chosen specialisation on boost.
+# Default: 1
+Boost.Glyphs = 1
 
-#################################
+# Give the dual spec on boost.
+# Default: 1
+Boost.DualSpec = 1
 
-#################################
-#
-# Allow unlocking flight paths for Outland
-#
-# Default: 1 (enabled)
-#
+# Give riding skill.
+# Values are:
+# - 0: disabled
+# - 1: apprentice (ground 60%)
+# - 2: journeyman (ground 100%)
+# - 3: expert (fly 150%) (only for boost to level >= 70)
+# - 4: artisan (fly 280/310%) (only for boost to level >= 80)
+# Default: 3
+Boost.Riding = 3
 
-Appreciation.UnlockContinents.Outland.Enabled = 1
+# Give cold weather flying to fly in northend.
+# Only for boost to level >= 80
+# Default: 1
+Boost.ColdFlying = 1
 
-#################################
+# Give basic mounts, set to 0 for none.
+# This is the SPELL id and NOT the ITEM id!!!
+# Flying mounts are only for boost to level >= 70
+# Defauts:
+# - Horde ground: Swift Timber Wolf (23251)
+# - Horde fly: Tawny Wind Rider (32243)
+# - Horde fly fast: Armored Blue Wind Rider (61230)
+# - Alliance ground: Swift Brown Steed (23229)
+# - Alliance fly: Snowy Gryphon (32240)
+# - Alliance fly fast: Armored Snowy Gryphon (61229)
+Boost.Mounts.Horde.Ground = 23251
+Boost.Mounts.Horde.Fly = 32243
+Boost.Mounts.Horde.FlyFast = 61230
+Boost.Mounts.Alliance.Ground = 23229
+Boost.Mounts.Alliance.Fly = 32240
+Boost.Mounts.Alliance.FlyFast = 61229
 
-#################################
-#
-# Allow unlocking flight paths for Northrend
-#
-# Default: 0 (disabled)
-#
+# Give flight paths.
+# Outland: Only for boost to level >= 70
+# Northend: Only for boost to level >= 80
+# Default: 1
+Boost.FlightPaths.EasternKingdoms = 1
+Boost.FlightPaths.Kalimdor = 1
+Boost.FlightPaths.Outland = 1
+Boost.FlightPaths.Northend = 1
 
-Appreciation.UnlockContinents.Northrend.Enabled = 0
+# Bind the player heartstone to the endgame city depending on Level.
+# 60: Orgrimmar/Stormwind, 70: Orgrimmar/Stormwind, 80: Dalaran
+# Values are 1 (enabled) or 0 (disabled).
+# Default: 1
+Boost.Heartstone = 1
 
-#################################
-
-#################################
-#
-# Give the player a certificate of appreciation when reaching max level
-#
-# Default: 0 (disabled)
-#
-
-Appreciation.RewardAtMaxLevel.Enabled = 0
-
-#################################
+# Teleport the player to the city depending on Level.
+# 60: Orgrimmar/Stormwind, 70: Orgrimmar/Stormwind, 80: Dalaran
+# Default: 1
+Boost.Teleport = 1
