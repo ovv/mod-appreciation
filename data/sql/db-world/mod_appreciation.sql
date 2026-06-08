@@ -17,16 +17,19 @@ INSERT INTO `creature_template_model` (`CreatureID`, `Idx`, `CreatureDisplayID`,
 (@Entry, 0, 21697, 1, 1);
 
 DELETE FROM `creature` WHERE `id1`=@Entry;
-INSERT INTO `creature` (`id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES
-(@Entry, 0, -8801.2, 629.974, 94.2407, 3.06088), -- Stormwind City
-(@Entry, 1, 1674.8527, -4423.74, 18.665726, 2.53), -- Orgrimmar
+-- Reserved guid band for this module (60000000-60009999): high enough never to
+-- collide with core content, spaced 10k from other modules' bands.
+DELETE FROM `creature` WHERE `guid` BETWEEN 60000000 AND 60000009;
+INSERT INTO `creature` (`guid`, `id1`, `map`, `position_x`, `position_y`, `position_z`, `orientation`) VALUES
+(60000000, @Entry, 0, -8801.2, 629.974, 94.2407, 3.06088), -- Stormwind City
+(60000001, @Entry, 1, 1674.8527, -4423.74, 18.665726, 2.53), -- Orgrimmar
 
-(@Entry, 1, -592.0922, -4530.223, 41.330013, 1.0327661), -- Valley of trials (orc/troll)
-(@Entry, 1, -3085.2869, 67.22118, 78.43654, 4.713962), -- Red cloud mesa (tauren)
-(@Entry, 0, 2138.1467, 1300.3608, 53.803986, 1.995867), -- Deathknell (undead)
-(@Entry, 530, 10022.481, -6427.6157, 5.0905695, 0.7976799), -- Sunstrider isle (blood elf)
+(60000002, @Entry, 1, -592.0922, -4530.223, 41.330013, 1.0327661), -- Valley of trials (orc/troll)
+(60000003, @Entry, 1, -3085.2869, 67.22118, 78.43654, 4.713962), -- Red cloud mesa (tauren)
+(60000004, @Entry, 0, 2138.1467, 1300.3608, 53.803986, 1.995867), -- Deathknell (undead)
+(60000005, @Entry, 530, 10022.481, -6427.6157, 5.0905695, 0.7976799), -- Sunstrider isle (blood elf)
 
-(@Entry, 0, -9069.163, -38.800995, 87.884026, 5.793437), -- Northshire (human)
-(@Entry, 0, -6251.5654, 163.01076, 423.62302, 1.8507006), -- Coldridge Valley (gnome/dwarf)
-(@Entry, 1, 10214.945, 690.93414, 1360.4836, 0.54187703), -- Shadowglen (elf)
-(@Entry, 530, -4257.718, -13256.729, 57.671722, 5.077601); -- Ammen Vale (draenei)
+(60000006, @Entry, 0, -9069.163, -38.800995, 87.884026, 5.793437), -- Northshire (human)
+(60000007, @Entry, 0, -6251.5654, 163.01076, 423.62302, 1.8507006), -- Coldridge Valley (gnome/dwarf)
+(60000008, @Entry, 1, 10214.945, 690.93414, 1360.4836, 0.54187703), -- Shadowglen (elf)
+(60000009, @Entry, 530, -4257.718, -13256.729, 57.671722, 5.077601); -- Ammen Vale (draenei)
