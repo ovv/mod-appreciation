@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
-"""Driver: import all /tmp/d_*.py data modules, then validate or generate."""
-import glob, importlib, os, sys
-sys.path.insert(0, "/tmp")
+"""Driver: load json/<class>.json into sets.DATA, then validate or generate."""
+import json, os, sys
+sys.path.insert(0, os.path.dirname(__file__))
 import sets
 
-for f in sorted(glob.glob("/tmp/d_*.py")):
-    importlib.import_module(os.path.basename(f)[:-3])
+HERE = os.path.dirname(__file__)
+STEMS = {
+    "dk": "DK", "druid": "DRUID", "hunter": "HUNTER", "mage": "MAGE", "paladin": "PALADIN",
+    "priest": "PRIEST", "rogue": "ROGUE", "shaman": "SHAMAN", "warlock": "WARLOCK", "warrior": "WARRIOR",
+}
+
+for stem, cls in STEMS.items():
+    with open(os.path.join(HERE, "json", f"{stem}.json"), encoding="utf-8") as f:
+        sets.from_json(cls, json.load(f))
 
 cmd = sys.argv[1] if len(sys.argv) > 1 else "validate"
 if cmd == "validate":

@@ -3,10 +3,13 @@
 
 Each set is a dict slot->(itemId, randomProp). Missing slots default to (0,0).
 Slots are validated against Item.dbc (existence + inventory type) and the
-expected armor class per spec.
+expected armor class per spec. When the world DB dump is available (see itemdb),
+two further checks run: every item must be equippable by its class (AllowableClass)
+and a fresh-tier piece must not exceed its pre-raid counterpart's item level.
 """
 import sys
-import dbc  # /tmp/dbc.py
+import dbc
+import itemdb
 
 ITEMS = dbc.load_items()  # id -> (classId, subclassId, invType)
 
@@ -87,6 +90,10 @@ def s(**kw):
 
 def validate():
     errors = []
+    idb = itemdb.load() if itemdb.available() else None
+    if idb is None:
+        print("note: item_template not found (set AC_ITEM_TEMPLATE); skipping "
+              "equippability and fresh<=preraid item-level checks", file=sys.stderr)
     for cls, tiers in DATA.items():
         for tier, specs in tiers.items():
             for spec_i, slots in enumerate(specs):
@@ -105,6 +112,20 @@ def validate():
                         errors.append(f"{cls}/{tier}/spec{spec_i}/{slot}: id {iid} armor {dbc.ARMOR_SUB.get(sub,sub)} != expected for {cls}")
                     elif slot == "ranged" and (c, sub) not in RANGED_OK[cls]:
                         errors.append(f"{cls}/{tier}/spec{spec_i}/ranged: id {iid} ({dbc.typestr(c,sub,inv)}) wrong ranged type for {cls}")
+                    if idb and iid in idb and not itemdb.equippable(idb[iid]["ac"], cls):
+                        errors.append(f"{cls}/{tier}/spec{spec_i}/{slot}: id {iid} AllowableClass {idb[iid]['ac']} not equippable by {cls}")
+    # Tier progression: a fresh-tier piece must not out-item-level its pre-raid counterpart.
+    if idb:
+        for cls, tiers in DATA.items():
+            fresh, pre = tiers.get("fresh"), tiers.get("preraid")
+            if not fresh or not pre:
+                continue
+            for spec_i in range(min(len(fresh), len(pre))):
+                fs, ps = fresh[spec_i] or {}, pre[spec_i] or {}
+                for slot in set(fs) & set(ps):
+                    fi, pi = fs[slot][0], ps[slot][0]
+                    if fi and pi and fi in idb and pi in idb and idb[fi]["ilvl"] > idb[pi]["ilvl"]:
+                        errors.append(f"{cls}/spec{spec_i}/{slot}: fresh {fi} ilvl {idb[fi]['ilvl']} > preraid {pi} ilvl {idb[pi]['ilvl']}")
     return errors
 
 
